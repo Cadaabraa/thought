@@ -96,6 +96,12 @@
   textElement.addEventListener('mouseleave', function () {
     document.documentElement.style.setProperty('--size', '15px');
   });
+
+  // Add a click event listener to the document
+  document.addEventListener('click', function () {
+    // Redirect the user to a different site
+    window.location.href = 'https://www.example.com'; // Change this URL to the desired site
+  });
 </script>
 </body>
 </html>
