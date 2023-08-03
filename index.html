@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Content</title>
+<style>
+  :root {
+    --x: 0px;
+    --y: 0px;
+    --size: 15px;
+  }
+
+  body {
+    background: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .content-wrapper {
+    position: relative;
+  }
+
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .content .text-wrapper {
+    display: block;
+    width: 500px;
+    padding: 1em;
+    cursor: default;
+  }
+
+  .content .text-wrapper p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: yellowgreen;
+  }
+
+  .content-overlay {
+    position: absolute;
+    inset: 0;
+    background: yellowgreen;
+    clip-path: circle(var(--size) at var(--x) var(--y));
+    transition: all 200ms ease-out;
+  }
+
+  .content-overlay .text-wrapper p {
+    color: #333;
+    cursor: default;
+  }
+</style>
+</head>
+<body>
+<div class="content-wrapper cursor-wrapper">
+  <div class="content content-base">
+    <div class="text-wrapper">
+      <p>Oh hey, welcome to my mind.</p>
+    </div>
+  </div>
+  <div class="content content-overlay">
+    <div class="text-wrapper">
+      <p>Simply move the cursor and click to continue.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('mousemove', function (e) {
+    // Get the horizontal and vertical mouse positions in pixels
+    var x = e.clientX;
+    var y = e.clientY;
+
+    // Adjust the position by subtracting 4 pixels from both X and Y
+    x -= 4;
+    y -= 4;
+
+    // Update the CSS variables with the adjusted pixel positions
+    document.documentElement.style.setProperty('--x', x + 'px');
+    document.documentElement.style.setProperty('--y', y + 'px');
+  });
+
+  // When the p element is hovered, set the clip-path size to 45 pixels
+  var textElement = document.querySelector('.content-overlay .text-wrapper');
+  var textContainer = document.querySelector('.text-wrapper');
+  textElement.addEventListener('mouseenter', function () {
+    // Calculate the scale based on the height of the .text-container (120%)
+    var scale = textContainer.clientHeight * 0.5;
+    document.documentElement.style.setProperty('--size', scale + 'px');
+  });
+
+  // When the p element is no longer hovered, set the clip-path size back to 20 pixels
+  textElement.addEventListener('mouseleave', function () {
+    document.documentElement.style.setProperty('--size', '15px');
+  });
+</script>
+</body>
+</html>
